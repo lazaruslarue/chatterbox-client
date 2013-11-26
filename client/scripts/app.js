@@ -59,7 +59,10 @@ var renderMessage = function(messageJSON){
   $messageNode.addClass('message');
   _.each(messageJSON, function(val, i, coll) {
     var content = messageJSON[i];
+
     content = content.slice(0,characterLimits[i]);
+    if (val.charCodeAt(0) > 150) return;
+    // if (content.indexOf("ķ͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌") !== -1) debugger;
     $('<div></div>')
       .addClass(i)
       .text(content)
