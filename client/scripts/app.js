@@ -1,14 +1,21 @@
 
 $(document).ready(function(){
-  $('button').on('click',function(){
+  // $('#main').prepend($('<'));
+  $('.updater').on('click',function(){
     getMessages();
     printMessages(listOfMessages);
   });
+  $('.submit').on('click', function(){
+    var userMessage = $('input').val().toString();
+    sendMessage(userMessage);
+  });
+
 });
 
 
 var userName=''; // grab this from the prompt
 var listOfMessages = [];
+var mostRecentUpdate = '';
 
 
 var getMessages = function(){
@@ -17,11 +24,18 @@ var getMessages = function(){
     url: 'https://api.parse.com/1/classes/chatterbox',
     type: 'GET',
     contentType: 'application/json',
+    data: {"order" :"-createdAt"},
+    // {"where": {
+    //       "objectId":"teDOY3Rnpe"
+    //       // "order":"-createdAt"
+    //     }
+    //   },
     success: function (data) {
       _.each(data.results, function(messageJSON){
         renderMessage(messageJSON);
       });
       printMessages(listOfMessages);
+      // console.log(data);
     },
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -47,7 +61,32 @@ var printMessages = function(listOfMessages){
   });
 };
 
+var composeMessage = function(userText) {
+  var sendJSON = {};
+  userName = window.location.search;
+  userName = userName.split('=')[1];
+  sendJSON.userName = userName;
+  sendJSON.text = userText;
+  sendJSON.roomname = '4chan';
+  return sendJSON;
+};
 
+var sendMessage = function(input) {
+  var toSend = composeMessage(input);
+  $.ajax({
+    url: 'https://api.parse.com/1/classes/chatterbox',
+    type: 'POST',
+    data: JSON.stringify(toSend),
+    contentType: 'application/json',
+    success: function (data) {
+      console.log('chatterbox: Message sent');
+    },
+    error: function (data) {
+      // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+      console.error('chatterbox: Failed to send message');
+    }
+  });
+};
 
 
 // Object {results: Array[100]}
@@ -61,7 +100,11 @@ var printMessages = function(listOfMessages){
 // username: "gary"
 // message: 
 
-
+// var message = {
+//   'username': 'shawndrost',
+//   'text': 'trololo',
+//   'roomname': '4chan'
+// };
 
 
 // get JSON
