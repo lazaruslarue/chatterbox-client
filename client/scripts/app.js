@@ -1,4 +1,12 @@
 
+$(document).ready(function(){
+  $('button').on('click',function(){
+    getMessages();
+    printMessages(listOfMessages);
+  });
+});
+
+
 var userName=''; // grab this from the prompt
 var listOfMessages = [];
 
@@ -24,6 +32,7 @@ var getMessages = function(){
 
 var renderMessage = function(messageJSON){
   var $messageNode = $('<div></div>');
+  $messageNode.addClass('message');
   for (var k in messageJSON) {
     var $msgPart = $('<span></span>');
     $msgPart.addClass(k);

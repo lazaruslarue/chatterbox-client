@@ -8,7 +8,7 @@ body {
     width: 500px;
     margin: auto;
     text-align: left;
-    background: white;
+    background: #dedede;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
@@ -18,3 +18,29 @@ body {
     margin-top: 0;
     font-size: 35px;
 }
+
+.username {
+  color: red;
+  float: block;
+}
+
+.text {
+  color: blue;
+  
+}
+
+.roomname {
+  font-weight: bold;
+}
+.updatedAt {
+  color: pink;
+}
+
+.createdAt {
+  color: yellow;
+}
+
+.objectId {
+  color: green;
+}
+
