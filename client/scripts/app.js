@@ -1,12 +1,13 @@
 
 $(document).ready(function(){
-  
+
   $('.submit').on('click', function(){
     var userMessage = $('input').val().toString();
     sendMessage(userMessage);
+    $('input').val("");
   });
-  setInterval(refresh(),2000);
 
+  getMessages();
 });
 
 //GLOBALS
@@ -15,12 +16,12 @@ var userName=''; // grab this from the prompt
 var listOfMessages = [];
 var mostRecentUpdate = '';
 var characterLimits = {
-    "objectId": 24,
-    "roomname": 30,
-    'text':140,
-    'updatedAt': 24,
-    'username': 50
-  };
+  'objectId': 24,
+  'roomname': 30,
+  'text':140,
+  'updatedAt': 24,
+  'username': 50
+};
 
 var messageFields = [
   'username',
@@ -29,12 +30,10 @@ var messageFields = [
   'createdAt',
   'updatedAt',
   'objectId'
-  ];
+];
 
-var refresh = function() {
-      getMessages();
-      printMessages(listOfMessages);
-};
+// HELPER FUNCTIONS
+
 
 //RETRIEVING MESSAGES
 
@@ -51,14 +50,17 @@ var getMessages = function(){
     //     }
     //   },
     success: function (data) {
+      listOfMessages = [];
       _.each(data.results, function(messageJSON){
         renderMessage(messageJSON);
       });
       printMessages(listOfMessages);
+      setTimeout(getMessages(),2000);
     },
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-      console.error('chatterbox: Failed to get message');
+      console.error('chatterbox: Failed to get message. Will try again in 2sec');
+      setTimeout(getMessages(),2000);
     }
   });
 };
@@ -82,6 +84,7 @@ var renderMessage = function(messageJSON){
 };
 
 var printMessages = function(listOfMessages){
+  $('.message').remove();
   _.each(listOfMessages, function(msgNode, i) {
     if (i % 2) {
       $('#left').append(msgNode);
