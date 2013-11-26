@@ -16,6 +16,13 @@ $(document).ready(function(){
 var userName=''; // grab this from the prompt
 var listOfMessages = [];
 var mostRecentUpdate = '';
+var characterLimits = {
+    "objectId": 24,
+    "roomname": 50,
+    'text':140,
+    'updatedAt': 24,
+    'userName': 50
+  };
 
 
 var getMessages = function(){
@@ -47,17 +54,31 @@ var getMessages = function(){
 var renderMessage = function(messageJSON){
   var $messageNode = $('<div></div>');
   $messageNode.addClass('message');
-  for (var k in messageJSON) {
-    var $msgPart = $('<span></span>');
-    $msgPart.addClass(k);
-    $messageNode.append($msgPart.text(messageJSON[k]));
-  }
+  _.each(messageJSON, function(val, i, coll) {
+    var content = messageJSON[i];
+    content = content.toString();
+    content = content.slice(0,characterLimits[i]);
+    $('<div></div>')
+      .addClass(i)
+      .text(content)
+      .appendTo($messageNode);
+  });
   listOfMessages.push($messageNode);
+
+// createdAt: "2013-10-07T16:22:03.280Z"
+// objectId: "teDOY3Rnpe"
+// roomname: "lobby"
+// text: "hello"
+// updatedAt: "2013-10-07T16:22:03.280Z"
+// username: "gary"
+// message:
 };
 
 var printMessages = function(listOfMessages){
   _.each(listOfMessages, function(msgNode) {
-    $('#main').append(msgNode);
+    $('#left').append(msgNode);
+    var msgNode2 = msgNode;
+    $('#right').append(msgNode2);
   });
 };
 
