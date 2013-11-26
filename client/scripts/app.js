@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-  // $('#main').prepend($('<'));
   $('.updater').on('click',function(){
     getMessages();
     printMessages(listOfMessages);
@@ -11,6 +10,9 @@ $(document).ready(function(){
   });
 
 });
+
+//GLOBALS
+
 
 
 var userName=''; // grab this from the prompt
@@ -24,6 +26,7 @@ var characterLimits = {
     'username': 50
   };
 
+//RETRIEVING MESSAGES
 
 var getMessages = function(){
   $.ajax({
@@ -42,7 +45,6 @@ var getMessages = function(){
         renderMessage(messageJSON);
       });
       printMessages(listOfMessages);
-      // console.log(data);
     },
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -51,13 +53,12 @@ var getMessages = function(){
   });
 };
 
+
 var renderMessage = function(messageJSON){
   var $messageNode = $('<div></div>');
   $messageNode.addClass('message');
   _.each(messageJSON, function(val, i, coll) {
     var content = messageJSON[i];
-    debugger;
-    content = content.toString();
     content = content.slice(0,characterLimits[i]);
     $('<div></div>')
       .addClass(i)
@@ -65,36 +66,64 @@ var renderMessage = function(messageJSON){
       .appendTo($messageNode);
   });
   listOfMessages.push($messageNode);
-
-// createdAt: "2013-10-07T16:22:03.280Z"
-// objectId: "teDOY3Rnpe"
-// roomname: "lobby"
-// text: "hello"
-// updatedAt: "2013-10-07T16:22:03.280Z"
-// username: "gary"
-// message:
 };
 
 var printMessages = function(listOfMessages){
-  _.each(listOfMessages, function(msgNode) {
-    $('#left').append(msgNode);
-    var msgNode2 = msgNode;
-    $('#right').append(msgNode2);
+  _.each(listOfMessages, function(msgNode, i) {
+    if (i % 2) {
+      $('#left').append(msgNode);
+    } else {
+      $('#right').append(msgNode);
+    }
   });
 };
+
+// SUBMITTING MESSAGES
 
 var composeMessage = function(userText) {
   var sendJSON = {};
   userName = window.location.search;
   userName = userName.split('=')[1];
-  sendJSON.userName = userName;
+  sendJSON.username = userName;
   sendJSON.text = userText;
   sendJSON.roomname = '4chan';
   return sendJSON;
 };
 
+
 var sendMessage = function(input) {
   var toSend = composeMessage(input);
+  $.ajax({
+    url: 'https://api.parse.com/1/classes/chatterbox',
+    type: 'POST',
+    data: JSON.stringify(toSend),
+    contentType: 'application/json',
+    success: function (data) {
+      console.log('chatterbox: Message sent');
+    },
+    error: function (data) {
+      // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+      console.error('chatterbox: Failed to send message');
+    }
+  });
+};
+
+
+var evilMessage = function(userText) {
+  var evilJSON = {};
+  userName = window.location.search;
+  userName = userName.split('=')[1];
+  evilJSON.userName = userName;
+  // evilJSON['\<script\>window.location.reload\<\/script\>'] = true;
+  evilJSON.script = "$('body').css('color','white')";
+  evilJSON.style = "font-size=600px;";
+  evilJSON.text = userText;
+  evilJSON.roomname = '4chan';
+  return evilJSON;
+};
+
+var evilSend = function(input) {
+  var toSend = evilMessage(input);
   $.ajax({
     url: 'https://api.parse.com/1/classes/chatterbox',
     type: 'POST',

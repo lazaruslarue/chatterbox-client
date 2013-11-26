@@ -58,7 +58,8 @@ body {
 
 #left {
     float:left;
-
+    margin-left: 5%;
+    max-width: 400px;
 
 }
 
@@ -68,6 +69,8 @@ body {
 
 #right {
     float:right;
+    margin-right: 5%;
+    max-width: 400px;
 }
 #right.messages {
     float: left
