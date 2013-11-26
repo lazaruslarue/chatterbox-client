@@ -4,15 +4,35 @@ $(document).ready(function(){
   $('.submit').on('click', function(){
     var userMessage = $('input').val().toString();
     sendMessage(userMessage);
-    $('input').val("");
+    $('input').val("  ");
   });
 
+  $('.currentRoom').text(currentRoom);
+  $('.userFocus').text(userFocus);
   getMessages();
+
+//Clicking on username
+  $('.container').on('click','.username',function(){
+    userFocus = $(this).text();
+    $('.userFocus').text(userFocus);
+    console.log(userFocus);
+  });
+
+//Clicking on Room Name
+  $('.container').on('click','.roomname',function(){
+    currentRoom = this.text();
+    $('.currentRoom').text(currentRoom);
+    console.log(currentRoom);
+  });
 });
+
+
 
 //GLOBALS
 
 var userName=''; // grab this from the prompt
+var userFocus= 'All';
+var currentRoom = 'Lobby';
 var listOfMessages = [];
 var mostRecentUpdate = '';
 var characterLimits = {
@@ -102,7 +122,7 @@ var composeMessage = function(userText) {
   userName = userName.split('=')[1];
   sendJSON.username = userName;
   sendJSON.text = userText;
-  sendJSON.roomname = '4chan';
+  sendJSON.roomname = currentRoom;
   return sendJSON;
 };
 
@@ -124,6 +144,28 @@ var sendMessage = function(input) {
   });
 };
 
+// var changeRoom = function() {
+//   grabUserInput();
+  
+//   updateRoomName();
+  
+//   getMessagesForRoom();
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// XSS /// 
 
 var evilMessage = function(userText) {
   var evilJSON = {};

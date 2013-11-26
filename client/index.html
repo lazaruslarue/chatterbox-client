@@ -12,15 +12,30 @@
     <!-- internal javascript -->
     <script src="scripts/config.js"></script>
     <script src="scripts/app.js"></script>
+    <title>Chat-Client</title>
   </head>
   <body>
     <div id="main">
       <h1>Chat-Client</h1>
-      <form><input type="paragraph" name="userText" value=""/></form>
-      <button class="submit">Submit some rude thing</button>
       <div class="container">
-        <div id="left"></div>
-        <div id="right"></div>
+        <div class="nav">
+          <form><input type="paragraph" name="userText" value=""/>
+          <button class="submit" type="button">Submit some rude thing</button>
+          </form>
+        </div>
+        <div class="clear"></div>
+        <div id="left">
+          <div class="columnHeader">
+            <span class="columnTitle">Current Room:</span>
+            <span class="columnSubtitle currentRoom"></span>
+          </div>
+        </div>
+        <div id="right">
+          <div class="columnHeader">
+            <span class="columnTitle">User View:</span>
+            <span class="columnSubtitle userFocus"></span>
+          </div>
+        </div>
       </div>
     </div>
 
