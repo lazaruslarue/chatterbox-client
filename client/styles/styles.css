@@ -1,15 +1,13 @@
 body {
     background: #0e5185;
     text-align: center;
-    /*padding: 0 25px;*/
     font-family: monospace;
+    word-wrap: break-word;
 }
 
 #main {
-    /*width: 500px;*/
     margin: auto;
     text-align: left;
-/*    padding: 50px 60px;*/
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
 }
@@ -19,48 +17,11 @@ body {
     font-size: 35px;
 }
 
-.username {
-  color: #8a9f00;
-  float: left;
-  font-size: 1.2em;
-  padding: 0 10px 0 10px;
-}
-
-.text {
-  color: black;
-}
-
-.roomname {
-  color: white;
-  float:right;
-}
-
-.updatedAt {
-  color: pink;
-  display:none;
-}
-
-.createdAt {
-  color: yellow;
-}
-
-.objectId {
-  display:none;
-  color: green;
-}
-
-.message {
-  border: 1px dotted #eee;
-  background: rgba(0,0,0,0.3);
-  padding: 5px 10px 5px 10px;
-  min-height: 30px;
-}
-
 #left {
     float:left;
-    margin-left: 5%;
+    margin-left: 300px;
+    margin-right: 30px;
     max-width: 400px;
-
 }
 
 #left.messages {
@@ -68,10 +29,62 @@ body {
 }
 
 #right {
-    float:right;
-    margin-right: 5%;
+    float:left;
     max-width: 400px;
 }
 #right.messages {
     float: left
 }
+
+.message {
+  border: 1px dotted #eee;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.3);
+  height: 75px;
+  margin: 15px;
+  padding: 5px 10px;
+}
+
+.username {
+  color: #8a9f00;
+  float: left;
+  font-size: 12px;
+  height:15px;
+  width:180px;
+}
+.roomname {
+  float:right;
+  text-align: right;
+  color: white;
+  height: 15px;
+  font-size: 10px;
+  width:150px;
+}
+
+.text {
+  float: left;
+  clear: left;
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 40px;
+}
+
+.createdAt {
+  clear:left;
+  float:right;
+  /*color: rgba(0,0,0,0.3);*/
+  font-size: 8px;
+  text-align: right;
+}
+
+.updatedAt {
+  color: pink;
+  display:none;
+}
+
+.objectId {
+  display:none;
+  color: green;
+}
+

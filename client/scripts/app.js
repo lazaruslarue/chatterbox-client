@@ -1,30 +1,40 @@
 
 $(document).ready(function(){
-  $('.updater').on('click',function(){
-    getMessages();
-    printMessages(listOfMessages);
-  });
+  
   $('.submit').on('click', function(){
     var userMessage = $('input').val().toString();
     sendMessage(userMessage);
   });
+  setInterval(refresh(),2000);
 
 });
 
 //GLOBALS
-
-
 
 var userName=''; // grab this from the prompt
 var listOfMessages = [];
 var mostRecentUpdate = '';
 var characterLimits = {
     "objectId": 24,
-    "roomname": 50,
+    "roomname": 30,
     'text':140,
     'updatedAt': 24,
     'username': 50
   };
+
+var messageFields = [
+  'username',
+  'roomname',
+  'text',
+  'createdAt',
+  'updatedAt',
+  'objectId'
+  ];
+
+var refresh = function() {
+      getMessages();
+      printMessages(listOfMessages);
+};
 
 //RETRIEVING MESSAGES
 
@@ -57,14 +67,14 @@ var getMessages = function(){
 var renderMessage = function(messageJSON){
   var $messageNode = $('<div></div>');
   $messageNode.addClass('message');
-  _.each(messageJSON, function(val, i, coll) {
-    var content = messageJSON[i];
-
-    content = content.slice(0,characterLimits[i]);
-    if (val.charCodeAt(0) > 150) return;
-    // if (content.indexOf("ķ͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌͌") !== -1) debugger;
+  _.each(messageFields, function(val, i) {
+    var content = messageJSON[messageFields[i]];
+    if(content){
+      content = content.slice(0,characterLimits[messageFields[i]]);
+      if (val.charCodeAt(0) > 150) return;
+    }
     $('<div></div>')
-      .addClass(i)
+      .addClass(messageFields[i])
       .text(content)
       .appendTo($messageNode);
   });
