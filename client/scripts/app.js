@@ -21,7 +21,7 @@ var characterLimits = {
     "roomname": 50,
     'text':140,
     'updatedAt': 24,
-    'userName': 50
+    'username': 50
   };
 
 
@@ -56,6 +56,7 @@ var renderMessage = function(messageJSON){
   $messageNode.addClass('message');
   _.each(messageJSON, function(val, i, coll) {
     var content = messageJSON[i];
+    debugger;
     content = content.toString();
     content = content.slice(0,characterLimits[i]);
     $('<div></div>')
