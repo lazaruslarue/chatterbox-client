@@ -44,7 +44,8 @@ body {
   width:300px;
 }
 
-.nav button {
+.nav .submit {
+  width:120px;
   display: inline-block;
   border-radius: 3px;
   background-color: rgba(255,255,255,0.3);
@@ -53,7 +54,17 @@ body {
   height:100px;
   margin-left: 30px;
   font-size: 16px;
+}
 
+.nav .reset{
+  width:120px;
+  border-radius: 3px;
+  background-color: rgba(255,255,255,0.3);
+  color: black;
+  box-shadow:  inset 0 3px 5px rgba(255,255,255,0.3);
+  height:100px;
+  margin-left: 30px;
+  font-size: 16px;
 }
 
 #left {
@@ -149,3 +160,7 @@ body {
   clear:both;
 }
 
+.friend {
+  font-weight: bolder;
+  color: rgb(209, 231, 42);
+}

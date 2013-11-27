@@ -11,18 +11,32 @@ $(document).ready(function(){
   $('.userFocus').text(userFocus);
   getMessages();
 
+  $('.reset').on('click', function(){
+    getMessages();
+    userFocus= 'All';
+    currentRoom = 'Lobby';
+    $('.currentRoom').text(currentRoom);
+    $('.userFocus').text(userFocus);
+  });
+
+
 //Clicking on username
   $('.container').on('click','.username',function(){
     userFocus = $(this).text();
     $('.userFocus').text(userFocus);
-    console.log(userFocus);
+    $friendUser = $( "div.username:contains("+ userFocus +") ").addClass('friend');
+    $friendUser.siblings('.text').addClass('friend');
+    // console.log(userFocus);
+    // $('.')
   });
 
 //Clicking on Room Name
   $('.container').on('click','.roomname',function(){
-    currentRoom = this.text();
+    currentRoom = $(this).text();
     $('.currentRoom').text(currentRoom);
-    console.log(currentRoom);
+    $rooms = $( "div.roomname:contains("+ currentRoom +") ").parent().addClass('keep');
+    $('.message').not('.keep').fadeOut();
+    console.log($rooms);
   });
 });
 
@@ -58,6 +72,7 @@ var messageFields = [
 //RETRIEVING MESSAGES
 
 var getMessages = function(){
+  console.log('getting messages')
   $.ajax({
     // always use this url
     url: 'https://api.parse.com/1/classes/chatterbox',
@@ -75,12 +90,10 @@ var getMessages = function(){
         renderMessage(messageJSON);
       });
       printMessages(listOfMessages);
-      setTimeout(getMessages(),2000);
     },
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
       console.error('chatterbox: Failed to get message. Will try again in 2sec');
-      setTimeout(getMessages(),2000);
     }
   });
 };
@@ -136,10 +149,12 @@ var sendMessage = function(input) {
     contentType: 'application/json',
     success: function (data) {
       console.log('chatterbox: Message sent');
+      setTimeout(getMessages,5000);
     },
     error: function (data) {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
       console.error('chatterbox: Failed to send message');
+      setTimeout(getMessages,5000);
     }
   });
 };
