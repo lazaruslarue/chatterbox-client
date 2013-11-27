@@ -72,7 +72,7 @@ var messageFields = [
 //RETRIEVING MESSAGES
 
 var getMessages = function(){
-  console.log('getting messages');
+  console.log('getting messages');  
   $.ajax({
     // always use this url
     url: 'https://api.parse.com/1/classes/chatterbox',
